@@ -1,10 +1,14 @@
 {
-  "name": "notus-nextjs",
-  "homepage": "https://demos.creative-tim.com/notus-nextjs",
+  "name": "kamis-trading-portal",
+  "homepage": "https://kamis.vercel.app",
   "version": "1.1.0",
-  "description": "Notus NextJS - A free Tailwind CSS, NextJS and React Ui Kit and Admin by Creative Tim.",
-  "repository": "https://github.com/creativetimofficial/notus-nextjs",
+  "description": "Kamis Trading Portal",
+  "repository": "https://github.com/mwangiKibui/agri_portal",
   "license": "MIT",
+  "engines": {
+    "node": "16.19.0",
+    "npm": "8.19.3"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.3",
     "@popperjs/core": "2.9.1",
