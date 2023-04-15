@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 // components
 
-import IndexDropdown from "components/Dropdowns/IndexDropdown.js";
+// import IndexDropdown from "components/Dropdowns/IndexDropdown.js";
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -16,7 +16,7 @@ export default function Navbar(props) {
                 className="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
                 href="#pablo"
               >
-                Notus NextJS
+                KAMIS
               </a>
             </Link>
             <button
@@ -34,7 +34,7 @@ export default function Navbar(props) {
             }
             id="example-navbar-warning"
           >
-            <ul className="flex flex-col lg:flex-row list-none mr-auto">
+            {/* <ul className="flex flex-col lg:flex-row list-none mr-auto">
               <li className="flex items-center">
                 <a
                   className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
@@ -44,12 +44,45 @@ export default function Navbar(props) {
                   Docs
                 </a>
               </li>
-            </ul>
+            </ul> */}
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               <li className="flex items-center">
-                <IndexDropdown />
+                {/* <IndexDropdown /> */}
+                <a
+                  className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdemos.creative-tim.com%2Fnotus-nextjs%2F"
+                  target="_blank"
+                >
+                  {/* <i className="text-blueGray-400 fab fa-facebook text-lg leading-lg " />
+                  <span className="lg:hidden inline-block ml-2">Share</span> */}
+                  ENQUIRIES
+                </a>
               </li>
               <li className="flex items-center">
+                {/* <IndexDropdown /> */}
+                <a
+                  className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdemos.creative-tim.com%2Fnotus-nextjs%2F"
+                  target="_blank"
+                >
+                  {/* <i className="text-blueGray-400 fab fa-facebook text-lg leading-lg " />
+                  <span className="lg:hidden inline-block ml-2">Share</span> */}
+                  OFFERS
+                </a>
+              </li>
+              <li className="flex items-center">
+                {/* <IndexDropdown /> */}
+                <a
+                  className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdemos.creative-tim.com%2Fnotus-nextjs%2F"
+                  target="_blank"
+                >
+                  {/* <i className="text-blueGray-400 fab fa-facebook text-lg leading-lg " />
+                  <span className="lg:hidden inline-block ml-2">Share</span> */}
+                  RATE CARDS
+                </a>
+              </li>
+              {/* <li className="flex items-center">
                 <a
                   className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdemos.creative-tim.com%2Fnotus-nextjs%2F"
@@ -80,14 +113,22 @@ export default function Navbar(props) {
                   <i className="text-blueGray-400 fab fa-github text-lg leading-lg " />
                   <span className="lg:hidden inline-block ml-2">Star</span>
                 </a>
-              </li>
+              </li> */}
 
-              <li className="flex items-center">
+              {/* <li className="flex items-center">
                 <button
                   className="bg-blueGray-700 text-white active:bg-blueGray-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                   type="button"
                 >
                   <i className="fas fa-arrow-alt-circle-down"></i> Download
+                </button>
+              </li> */}
+              <li className="flex items-center">
+                <button
+                  className="bg-blueGray-700 text-white active:bg-blueGray-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  <i className="fas fa-user-plus"></i> LOGIN
                 </button>
               </li>
             </ul>

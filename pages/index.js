@@ -1,15 +1,239 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from "react";
+import React, { useEffect,useState } from "react";
 import Link from "next/link";
+
+// import { selectAuthState, setAuthState } from "../store/enquiries/enquiriesSlice";
+import { setEnquiriesHome,startFetchBids } from "../store/enquiries/enquiriesSlice";
+import { setProducts,startFetchProducts } from "../store/products/productsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { wrapper } from "../store/store";
+import { fetchEnquiriesHome } from "../store/enquiries/enquiriesAPI";
+import { fetchProducts } from "../store/products/productsAPI";
+import { fetchOffersHome } from "../store/offers/offersAPI";
+import { setOffers,startFetchOffers } from "../store/offers/offersSlice";
+import { fetchTransportRates } from "../store/transport_rates/transportRatesAPI";
+import { setTransportRates,startFetchTransportRates } from "../store/transport_rates/transportRatesSlice";
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
+import CardStats from "components/Cards/CardStats.js";
+import CustomCard from "components/Cards/CustomCard";
 
-export default function Index() {
+export default function Index({props}) {
+
+  const dispatch = useDispatch();
+  const {products,productsLoading} = useSelector(state => state.products);
+  const {enquiriesHome,enquiriesLoading} = useSelector(state => state.enquiries);
+  const {offersHome,offersLoading} = useSelector(state => state.offers);
+  const {transportRates,transportRatesLoading} = useSelector(state => state.transportRates);
+  // const [productsLoading,setProductsLoading] = useState(false);
+  // const [enquiriesLoading,setEnquiriesLoading] = useState(false);
+  // const [offersLoading,setOffersLoading] = useState(false);
+  // const [transportRatesLoading,setTransportRatesLoading] = useState(false);
+
+  useEffect( () => {
+    if(products.length == 0){
+      // dispatch(startFetchProducts());
+      fetchProducts().then((products) => dispatch(setProducts(products)));
+    }else{
+      console.log(products);
+    }
+  },[products]);
+
+  useEffect( () => {
+    if(enquiriesHome.length == 0){
+      // dispatch(startFetchBids());
+      fetchEnquiriesHome().then((enquiries) => dispatch(setEnquiriesHome(enquiries)));
+    }else{
+      console.log(enquiriesHome);
+    }
+  },[enquiriesHome]);
+
+  useEffect( () => {
+    if(offersHome.length == 0){
+      // dispatch(startFetchOffers());
+      fetchOffersHome().then((offers) => dispatch(setOffers(offers)));
+    }else{
+      console.log(offersHome);
+    }
+  },[offersHome]);
+
+  useEffect( () => {
+    if(transportRates.length == 0){
+      // dispatch(startFetchTransportRates());
+      fetchTransportRates().then((transportRates) => dispatch(setTransportRates(transportRates)));
+    }else{
+      console.log(transportRates);
+    }
+  },[transportRates]);
+
+  // useEffect( () => {
+  //   console.log("products ",products);
+  // },[products,enquiriesHome])
+
+  const dummy = <div className="flex flex-wrap">
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="TRAFFIC"
+                  statTitle="350,897"
+                  statArrow="up"
+                  statPercent="3.48"
+                  statPercentColor="text-emerald-500"
+                  statDescripiron="Since last month"
+                  statIconName="far fa-chart-bar"
+                  statIconColor="bg-red-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="NEW USERS"
+                  statTitle="2,356"
+                  statArrow="down"
+                  statPercent="3.48"
+                  statPercentColor="text-red-500"
+                  statDescripiron="Since last week"
+                  statIconName="fas fa-chart-pie"
+                  statIconColor="bg-orange-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="SALES"
+                  statTitle="924"
+                  statArrow="down"
+                  statPercent="1.10"
+                  statPercentColor="text-orange-500"
+                  statDescripiron="Since yesterday"
+                  statIconName="fas fa-users"
+                  statIconColor="bg-pink-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="PERFORMANCE"
+                  statTitle="49,65%"
+                  statArrow="up"
+                  statPercent="12"
+                  statPercentColor="text-emerald-500"
+                  statDescripiron="Since last month"
+                  statIconName="fas fa-percent"
+                  statIconColor="bg-lightBlue-500"
+                />
+              </div>
+            </div>
   return (
     <>
+
       <IndexNavbar fixed />
-      <section className="header relative pt-16 items-center flex h-screen max-h-860-px">
+
+      <section className="header relative pt-5 items-center flex mt-20 ">
+        <div className="container mx-auto items-center flex flex-wrap">
+          <h3 className="text-2xl ml-3 mb-2 font-semibold leading-normal">
+            BIDS
+          </h3>
+          {
+            
+            enquiriesHome.length > 0 ? (
+              <div className="flex flex-wrap">
+                {
+                  enquiriesHome.map((enquiry,index) => {
+                    let product = products.find(prod => prod.id == enquiry.product_id);
+                    return (
+                        <div className="w-full  lg:w-6/12 xl:w-3/12 px-4 mb-10" key={index}>
+                        <CustomCard
+                          entityType="bid"
+                          entityTitle={product.name}
+                          entityVolume={enquiry.volume}
+                          entityPrice={enquiry.unit_price}
+                          entityTransportation={enquiry.for_transport ? true : false}
+                          entityNegotiation={enquiry.for_transport ? true : false}
+                        />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+                
+              ) : (
+                <div>
+                  <p>No bids found</p>
+                </div>
+              )
+          }
+        </div>
+      </section>
+
+      <section className="header relative pt-5 items-center flex mt-20 ">
+      <div className="container mx-auto items-center flex flex-wrap">
+      <h3 className="text-2xl ml-3 mb-2 font-semibold leading-normal">
+          OFFERS
+          </h3>
+        {
+          offersHome.length > 0 ? (
+            <div className="flex flex-wrap">
+              {
+                offersHome.map((offer,index) => {
+                  return (
+                      <div className="w-full  lg:w-6/12 xl:w-3/12 px-4 mb-10" key={index}>
+                      <CustomCard
+                        entityType="offer"
+                        entityTitle={offer.product.name}
+                        entityVolume={offer.volume}
+                        entityPrice={offer.unit_price}
+                        entityTransportation={offer.for_transport ? true : false}
+                        entityNegotiation={offer.is_negotiable ? true : false}
+                      />
+                    </div>
+                  )
+                })
+              }
+            </div>
+              
+            ) : (
+              <div>
+                <p>No offers found</p>
+              </div>
+            )
+        }
+        </div>
+      </section>
+
+      <section className="header relative pt-5 pb-16 items-center flex mt-20 ">
+      <div className="container mx-auto items-center flex flex-wrap">
+      <h3 className="text-2xl ml-3 mb-2 font-semibold leading-normal">
+          TRANSPORT RATES
+          </h3>
+        {
+          transportRates.length > 0 ? (
+            <div className="flex flex-wrap">
+              {
+                transportRates.map((transportRate,index) => {
+                  return (
+                      <div className="w-full  lg:w-6/12 xl:w-3/12 px-4 mb-10" key={index}>
+                      <CustomCard
+                        entityType="transportRate"
+                        entityTitle={transportRate.vessel.name}
+                        entityVolume={transportRate.vessel_capacity}
+                        entityPrice={transportRate.cost_per_km}
+                        entityTransportation={transportRate.is_negotiable ? true : false}
+                        entityNegotiation={transportRate.is_negotiable ? true : false}
+                      />
+                    </div>
+                  )
+                })
+              }
+            </div>
+              
+            ) : (
+              <div>
+                <p>No transport rates found</p>
+              </div>
+            )
+        }
+        </div>
+      </section>
+      
+      {/* <section className="header relative pt-16 items-center flex h-screen max-h-860-px">
         <div className="container mx-auto items-center flex flex-wrap">
           <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
             <div className="pt-32 sm:pt-0">
@@ -54,9 +278,10 @@ export default function Index() {
           src="/img/pattern_nextjs.png"
           alt="..."
         />
-      </section>
+      </section> */}
 
-      <section className="mt-48 md:mt-40 pb-40 relative bg-blueGray-100">
+
+      {/* <section className="mt-48 md:mt-40 pb-40 relative bg-blueGray-100">
         <div
           className="-mt-20 top-0 bottom-auto left-0 right-0 w-full absolute h-20"
           style={{ transform: "translateZ(0)" }}
@@ -660,8 +885,40 @@ export default function Index() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <Footer />
     </>
   );
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ params }) => {
+//       let {enquiries,products} = store.getState();
+//       let enquiriesHome = [];
+
+//       // check if we have products first...
+//       if(products.products.length == 0){
+//         products = await fetchProducts();
+//         console.log("the products ",products);
+//         await store.dispatch(setProducts(products));
+//       }else{
+//         // product
+//       }
+
+//       // check if we have bids.
+//       if(enquiries.enquiriesHome.length == 0){
+//         enquiriesHome = await fetchEnquiriesHome();
+//         await store.dispatch(setEnquiriesHome(enquiriesHome));
+//       }else{
+//         enquiriesHome = enquiries.enquiriesHome;
+//       }
+
+//       // console.log("State on server", store.getState());
+//       return {
+//         props: {
+//           enquiriesHome,
+//         },
+//       };
+//     }
+// );
